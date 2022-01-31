@@ -1,0 +1,30 @@
+---
+name: Vanagon Snyk scan
+
+on: push
+
+jobs:
+ snyk_vanagon:
+   runs-on: ubuntu-latest
+   steps:
+    - name: checkout the current PR
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 1
+        persist-credentials: false
+    - name: Run Vanagon Snyk Scan
+      uses: puppetlabs/security-snyk-vanagon-action@v2
+      with:
+        snykToken: ${{ secrets.SNYK_PE_TOKEN }}
+        snykOrg: 'puppet-enterprise'
+        skipPlatforms: 'debian-10-armhf'
+        urlsToReplace: 'artifactory.delivery.puppetlabs.net,%s/xart,builds.delivery.puppetlabs.net,%s/xbuild'
+        newHost: 'localhost'
+        rproxyUser: ${{ secrets.SEC_PUBLIC_RPROXY_USER }}
+        rproxyKey: ${{ secrets.SEC_PUBLIC_RPROXY_KEY }}
+        sshKey: ${{ secrets.SEC_SECBOT_SSH_PUBLIC }}
+        sshKeyName: 'id_ed25519'
+        branch : ${{ github.ref_name }}
+    - name: Check output
+      if: steps.scan.outputs.vulns != ''
+      run: echo "Vulnerabilities detected; ${{ steps.scan.outputs.vulns }}" && exit 1
