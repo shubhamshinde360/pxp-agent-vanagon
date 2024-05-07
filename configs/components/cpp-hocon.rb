@@ -56,10 +56,14 @@ component 'cpp-hocon' do |pkg, settings, platform|
     # These platforms use the default OS toolchain, rather than pl-build-tools
     pkg.environment 'CPPFLAGS', settings[:cppflags]
     pkg.environment 'LDFLAGS', settings[:ldflags]
-    cmake = 'cmake'
     toolchain = ''
     boost_static_flag = '-DBOOST_STATIC=OFF'
     special_flags = " -DENABLE_CXX_WERROR=OFF -DCMAKE_CXX_FLAGS='#{settings[:cflags]}'"
+    cmake = if platform.name =~ /amazon-7-aarch64/
+              '/usr/bin/cmake3'
+            else
+              'cmake'
+            end
   end
 
   # Until we build our own gettext packages, disable using locales.

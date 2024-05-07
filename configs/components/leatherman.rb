@@ -106,12 +106,16 @@ component 'leatherman' do |pkg, settings, platform|
     # These platforms use the default OS toolchain, rather than pl-build-tools
     pkg.environment 'CPPFLAGS', settings[:cppflags]
     pkg.environment 'LDFLAGS', settings[:ldflags]
-    cmake = 'cmake'
     toolchain = ''
     boost_static_flag = ''
 
     # Workaround for hanging leatherman tests (-fno-strict-overflow)
     special_flags = " -DENABLE_CXX_WERROR=OFF -DCMAKE_CXX_FLAGS='#{settings[:cflags]} -fno-strict-overflow -Wno-deprecated-declarations' "
+    cmake = if platform.name =~ /amazon-7-aarch64/
+              '/usr/bin/cmake3'
+            else
+              'cmake'
+            end
   end
 
   if platform.is_linux?
