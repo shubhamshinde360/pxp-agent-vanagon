@@ -70,10 +70,14 @@ component 'pxp-agent' do |pkg, settings, platform|
     # use default that is pl-build-tools
   else
     # These platforms use the default OS toolchain, rather than pl-build-tools
-    cmake = 'cmake'
     toolchain = ''
     special_flags += " -DCMAKE_CXX_FLAGS='#{settings[:cflags]} -Wno-deprecated -Wimplicit-fallthrough=0' "
     special_flags += ' -DENABLE_CXX_WERROR=OFF ' unless platform.name =~ /sles-15/
+    cmake = if platform.name =~ /amazon-7-aarch64/
+              '/usr/bin/cmake3'
+            else
+              'cmake'
+            end
   end
 
   # Boost_NO_BOOST_CMAKE=ON was added while upgrading to boost

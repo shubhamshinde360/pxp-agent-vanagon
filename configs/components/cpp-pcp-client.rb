@@ -56,10 +56,14 @@ component 'cpp-pcp-client' do |pkg, settings, platform|
     # These platforms use the default OS toolchain, rather than pl-build-tools
     pkg.environment 'CPPFLAGS', settings[:cppflags]
     pkg.environment 'LDFLAGS', settings[:ldflags]
-    cmake = 'cmake'
     toolchain = ''
     platform_flags = "-DCMAKE_CXX_FLAGS='#{settings[:cflags]} -Wimplicit-fallthrough=0'"
     special_flags = ' -DENABLE_CXX_WERROR=OFF'
+    cmake = if platform.name =~ /amazon-7-aarch64/
+              '/usr/bin/cmake3'
+            else
+              'cmake'
+            end
   end
 
   # Boost_NO_BOOST_CMAKE=ON was added while upgrading to boost
