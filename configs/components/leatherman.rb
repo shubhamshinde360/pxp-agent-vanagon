@@ -111,7 +111,7 @@ component 'leatherman' do |pkg, settings, platform|
 
     # Workaround for hanging leatherman tests (-fno-strict-overflow)
     special_flags = " -DENABLE_CXX_WERROR=OFF -DCMAKE_CXX_FLAGS='#{settings[:cflags]} -fno-strict-overflow -Wno-deprecated-declarations' "
-    cmake = if platform.name =~ /amazon-7-aarch64/
+    cmake = if platform.name =~ /amazon-2-aarch64/
               '/usr/bin/cmake3'
             else
               'cmake'

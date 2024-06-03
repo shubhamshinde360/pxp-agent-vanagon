@@ -82,7 +82,7 @@ component 'pxp-agent' do |pkg, settings, platform|
     toolchain = ''
     special_flags += " -DCMAKE_CXX_FLAGS='#{settings[:cflags]} -Wno-deprecated -Wimplicit-fallthrough=0' "
     special_flags += ' -DENABLE_CXX_WERROR=OFF ' unless platform.name =~ /sles-15/
-    cmake = if platform.name =~ /amazon-7-aarch64/
+    cmake = if platform.name =~ /amazon-2-aarch64/
               '/usr/bin/cmake3'
             else
               'cmake'
