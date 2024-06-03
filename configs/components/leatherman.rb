@@ -88,7 +88,7 @@ component 'leatherman' do |pkg, settings, platform|
     pkg.environment 'LDFLAGS', settings[:ldflags]
     toolchain = ''
     boost_static_flag = ''
-    cmake = if platform.name =~ /amazon-7-aarch64/
+    cmake = if platform.name =~ /amazon-2-aarch64/
               '/usr/bin/cmake3'
             else
               'cmake'

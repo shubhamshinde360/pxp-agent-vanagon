@@ -59,7 +59,7 @@ component 'cpp-pcp-client' do |pkg, settings, platform|
     toolchain = ''
     platform_flags = "-DCMAKE_CXX_FLAGS='#{settings[:cflags]} -Wimplicit-fallthrough=0'"
     special_flags = ' -DENABLE_CXX_WERROR=OFF'
-    cmake = if platform.name =~ /amazon-7-aarch64/
+    cmake = if platform.name =~ /amazon-2-aarch64/
               '/usr/bin/cmake3'
             else
               'cmake'
