@@ -49,7 +49,7 @@ component 'cpp-hocon' do |pkg, settings, platform|
     toolchain = ''
     boost_static_flag = '-DBOOST_STATIC=OFF'
     special_flags = " -DENABLE_CXX_WERROR=OFF -DCMAKE_CXX_FLAGS='#{settings[:cflags]}'"
-    cmake = if platform.name =~ /amazon-7-aarch64/
+    cmake = if platform.name =~ /amazon-2-aarch64/
               '/usr/bin/cmake3'
             else
               'cmake'
